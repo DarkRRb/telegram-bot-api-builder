@@ -1,0 +1,28 @@
+name: Linux x64
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - run: sudo apt install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev
+      
+      - uses: actions/checkout@v4
+        with:
+          repository: 'tdlib/telegram-bot-api'
+          submodules: 'recursive'
+
+      - run: mkdir build
+      - run: cd build
+      - run: CXXFLAGS="-stdlib=libc++" CC=/usr/bin/clang CXX=/usr/bin/clang++ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=.. ..
+      - run: cmake --build . --target install
+      - run: cd ..
+
+      # 打包二进制文件夹
+      - run: tar -czf bin.tar.gz bin
+      - uses: actions/upload-artifact@v4
+        with:
+          path: bin.tar.gz
