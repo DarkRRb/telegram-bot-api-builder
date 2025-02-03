@@ -21,8 +21,7 @@ jobs:
       - run: cmake --build . --target install
         working-directory: build
 
-      # 打包二进制文件夹
-      - run: tar -czf bin.tar.gz bin
       - uses: actions/upload-artifact@v4
         with:
-          path: bin.tar.gz
+          name: telegram-bot-api
+          path: bin/telegram-bot-api
