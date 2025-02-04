@@ -6,10 +6,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - run: sudo apt install -y make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev
-      
+      - run: sudo apt install -y make git zlib1g-dev libssl-dev gperf cmake clang=3.4 libc++-dev libc++abi-dev
+
       - uses: actions/checkout@v4
         with:
           repository: 'tdlib/telegram-bot-api'
