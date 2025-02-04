@@ -8,22 +8,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: sudo apt install -y make git zlib1g-dev libssl-dev gperf cmake clang-3.4 libc++-dev libc++abi-dev
+      - run: sudo apt install make git zlib1g-dev libssl-dev gperf cmake clang-18 libc++-18-dev libc++abi-18-dev
 
-      - run: ldd --version
+      - uses: actions/checkout@v4
+        with:
+          repository: 'tdlib/telegram-bot-api'
+          submodules: 'recursive'
 
-      # - uses: actions/checkout@v4
-      #   with:
-      #     repository: 'tdlib/telegram-bot-api'
-      #     submodules: 'recursive'
+      - run: mkdir build
+      - run: CXXFLAGS="-stdlib=libc++" CC=/usr/bin/clang CXX=/usr/bin/clang++ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=.. ..
+        working-directory: build
+      - run: cmake --build . --target install
+        working-directory: build
 
-      # - run: mkdir build
-      # - run: CXXFLAGS="-stdlib=libc++" CC=/usr/bin/clang CXX=/usr/bin/clang++ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=.. ..
-      #   working-directory: build
-      # - run: cmake --build . --target install
-      #   working-directory: build
-
-      # - uses: actions/upload-artifact@v4
-      #   with:
-      #     name: telegram-bot-api
-      #     path: bin/telegram-bot-api
+      - uses: actions/upload-artifact@v4
+        with:
+          name: telegram-bot-api
+          path: bin/telegram-bot-api
