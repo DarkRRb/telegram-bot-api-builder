@@ -8,8 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - run: sudo apt install make git zlib1g-dev libssl-dev gperf cmake clang-18 libc++-18-dev libc++abi-18-dev
+      - run: sudo apt install make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev
       - run: ldd --version
+      - run: clang --version
 
       # - uses: actions/checkout@v4
       #   with:
