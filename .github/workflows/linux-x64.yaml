@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: sudo apt install make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev
+      - run: sudo apt install make git zlib1g-dev libssl-dev gperf cmake clang libc++-dev libc++abi-dev libc6=2.38
       - run: ldd --version
       - run: clang --version
 
